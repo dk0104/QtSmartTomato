@@ -6,9 +6,10 @@ CONFIG -= app_bundle
 CONFIG += thread
 CONFIG -= qt
 
-HEADERS +=     tst_timer_completetomato_completenotificationreceived.h
+HEADERS +=    
 
-SOURCES +=     main.cpp
+SOURCES +=     main.cpp \
+    timertestfixture.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../Logic/release/ -lLogic
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../Logic/debug/ -lLogic
