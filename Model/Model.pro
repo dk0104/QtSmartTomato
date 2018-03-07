@@ -25,11 +25,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        model.cpp
+    tomato.cpp \
+    epic.cpp \
+    project.cpp \
+    task.cpp
 
 HEADERS += \
-        model.h \
-        model_global.h 
+        model_global.h \ 
+    tomato.h \
+    epic.h \
+    project.h \
+    task.h \
+    states.h
 
 unix {
     target.path = /usr/lib

@@ -1,5 +1,3 @@
-#include "tst_timer_completetomato_completenotificationreceived.h"
-
 #include <gtest/gtest.h>
 
 int main(int argc, char *argv[])
