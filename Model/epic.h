@@ -1,27 +1,23 @@
 #ifndef EPIC_H
 #define EPIC_H
 #include "model_global.h"
-#include "states.h"
-#include "serializer.h"
+#include <QString>
 
-#include <QObject>
 
-class MODELSHARED_EXPORT Epic : public QObject, Serializer
+class MODELSHARED_EXPORT Epic
 {
 public:
-    explicit Epic(QObject *parent = nullptr);
+    explicit Epic(const QString& name = "");
 
-    std::shared_ptr<QList<Project> > getProjects() const;
+    QString name() const;
+    void setName(const QString &name);
 
-    void AddProject(Project& project);
-protected:
+    int id() const;
+    void setId(int id);
 
-    std::shared_ptr<QList<Project>> projects;
-
-
-    // Serializer interface
 public:
-    void Serialize(const QList<QPair<string,string>>& elementList) override;
+    QString mName;
+    int mId;
 };
 
 #endif // EPIC_H

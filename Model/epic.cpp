@@ -1,26 +1,32 @@
 #include "epic.h"
 using namespace std;
 
-Epic::Epic(QObject *parent) : QObject(parent)
-{
-    projects = make_shared<map<QString,Project>>();
 
+Epic::Epic(const QString &name)
+{
+    mName{name};
+    mId{-1};
 }
 
-std::shared_ptr<map<QString, Project> > Epic::getProjects() const
+QString Epic::name() const
 {
-    return projects;
+    return mName;
 }
 
-void Epic::AddProject(Project &project)
+void Epic::setName(const QString &name)
 {
-
+    mName = name;
 }
 
-void Epic::Serialize(const QList<QPair<string, string> > &elementList)
+int Epic::id() const
 {
-    elementList.append(qMakePair("Epic","Test"));
-
+    return mId;
 }
+
+void Epic::setId(int id)
+{
+    mId = id;
+}
+
 
 

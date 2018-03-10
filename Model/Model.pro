@@ -10,6 +10,7 @@ QT       -= gui
 
 TARGET = Model
 TEMPLATE = lib
+CONFIG += c++14
 
 DEFINES += MODEL_LIBRARY
 
