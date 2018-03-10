@@ -17,3 +17,10 @@ void Epic::AddProject(Project &project)
 
 }
 
+void Epic::Serialize(const QList<QPair<string, string> > &elementList)
+{
+    elementList.append(qMakePair("Epic","Test"));
+
+}
+
+
