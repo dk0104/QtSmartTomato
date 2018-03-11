@@ -8,6 +8,6 @@ enum ProcessStates{
     Completed,
     Paused,
     Canceled
-}
+};
 
 #endif // STATES_H

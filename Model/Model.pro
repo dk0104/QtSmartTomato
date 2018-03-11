@@ -4,13 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += xml
+QT       += sql
 
 QT       -= gui
 
 TARGET = Model
 TEMPLATE = lib
-CONFIG += c++14
+CONFIG += lib c++14
 
 DEFINES += MODEL_LIBRARY
 
@@ -29,7 +29,8 @@ SOURCES += \
     tomato.cpp \
     epic.cpp \
     project.cpp \
-    task.cpp
+    task.cpp \
+    databaseconnector.cpp
 
 HEADERS += \
         model_global.h \ 
@@ -37,7 +38,8 @@ HEADERS += \
     epic.h \
     project.h \
     task.h \
-    states.h
+    states.h \
+    databaseconnector.h
 
 unix {
     target.path = /usr/lib

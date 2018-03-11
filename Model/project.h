@@ -1,32 +1,30 @@
 #ifndef PROJECT_H
 #define PROJECT_H
-
+#include "model_global.h"
 #include "states.h"
-#include "serializer.h"
+#include <QDateTime>
 
-#include <QObject>
 
-class Project : public QObject, Serializer
+class MODELSHARED_EXPORT Project
 {
-    Q_OBJECT
 public:
-    explicit Project(QObject *parent = nullptr);
+    explicit Project();
 
-signals:
-   void NotifyProjectChange(QDateTime date);
+    QString getName() const;
+    void setName(const QString &value);
 
-public slots:
+    ProcessStates getCurrentState() const;
+    void setCurrentState(const ProcessStates &value);
+
+    int getId() const;
+    void setId(int id);
+
 protected:
 private:
-   QString name;
-   QDateTime creationDate;
-   ProcessStates currentState;
-   std::shared_ptr<QList<Task>> tasks;
-
-
-   // Serializer interface
-public:
-   QDomElement SerializeToDomElement(QDomElement &document);
+    int mId;
+    QString name;
+    QDateTime creationDate;
+    ProcessStates currentState;
 };
 
 #endif // PROJECT_H

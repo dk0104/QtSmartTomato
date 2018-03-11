@@ -2,10 +2,10 @@
 using namespace std;
 
 
-Epic::Epic(const QString &name)
+Epic::Epic(const QString &name):
+    mName(name),
+    mId(-1)
 {
-    mName{name};
-    mId{-1};
 }
 
 QString Epic::name() const
