@@ -30,7 +30,8 @@ SOURCES += \
     epic.cpp \
     project.cpp \
     task.cpp \
-    databaseconnector.cpp
+    databaseconnector.cpp \
+    epicdao.cpp
 
 HEADERS += \
         model_global.h \ 
@@ -39,7 +40,8 @@ HEADERS += \
     project.h \
     task.h \
     states.h \
-    databaseconnector.h
+    databaseconnector.h \
+    epicdao.h
 
 unix {
     target.path = /usr/lib
