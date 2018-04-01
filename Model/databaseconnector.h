@@ -1,7 +1,9 @@
 #ifndef DATABASECONNECTOR_H
 #define DATABASECONNECTOR_H
+
 #include <QString>
 #include <memory>
+#include "epicdao.h"
 
 class QSqlQuery;
 class QSqlDatabase;
@@ -21,6 +23,8 @@ public:
 
 protected:
     DataBaseConnector(const QString& path = DB_FILENAME);
+public:
+    const EpicDAO mEpicDao;
 private:
     std::unique_ptr<QSqlDatabase> mDataBase;
 

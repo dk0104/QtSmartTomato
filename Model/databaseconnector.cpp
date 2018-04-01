@@ -5,11 +5,13 @@
 #include <QDebug>
 
 DataBaseConnector::DataBaseConnector(const QString& path):
-    mDataBase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE")))
+    mDataBase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))),
+    mEpicDao(*mDataBase)
 {
     mDataBase->setDatabaseName(path);
     auto openResult = mDataBase->open();
     qDebug() << "Database connection: " << (openResult?"OK":"KO")<<endl;
+    mEpicDao.init();
 }
 
 DataBaseConnector &DataBaseConnector::GetInstance()
