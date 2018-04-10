@@ -41,14 +41,14 @@ void Task::setDescription(const QString &description)
     mDescription = description;
 }
 
-QDateTime Task::getPlanedTime() const
+QDate Task::getPlanedTime() const
 {
-    return mPlanedTime;
+    return mPlannedTime;
 }
 
-void Task::setPlanedTime(const QDateTime &value)
+void Task::setPlanedTime(const QDate &value)
 {
-    mPlanedTime = value;
+    mPlannedTime = value;
 }
 
 int Task::getTomatoCounter() const

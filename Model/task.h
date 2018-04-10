@@ -20,8 +20,8 @@ public:
     QString getDescription() const;
     void setDescription(const QString &description);
 
-    QDateTime getPlanedTime() const;
-    void setPlanedTime(const QDateTime &value);
+    QDate getPlanedTime() const;
+    void setPlanedTime(const QDate &value);
 
     int getTomatoCounter() const;
     void setTomatoCounter(int tomatoCounter);
@@ -31,7 +31,7 @@ private:
     int mProjectId;
     QString mName;
     QString mDescription;
-    QDateTime mPlanedTime;
+    QDate mPlannedTime;
     int mTomatoCounter;
 };
 
