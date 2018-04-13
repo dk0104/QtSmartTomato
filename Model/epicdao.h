@@ -1,7 +1,9 @@
 #ifndef EPICDAO_H
 #define EPICDAO_H
 
-class SqlDatabase;
+class QSqlDatabase;
+class Project;
+
 class EpicDAO
 {
 public:

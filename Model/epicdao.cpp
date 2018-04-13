@@ -1,6 +1,7 @@
 #include "epicdao.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QStringList>
 #include "databaseconnector.h"
 
 EpicDAO::EpicDAO(QSqlDatabase &database):

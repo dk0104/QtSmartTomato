@@ -3,9 +3,10 @@
 #include "project.h"
 #include "databaseconnector.h"
 
-#include <QSqlDatabase>;
-#include <QString>;
-#include <QSqlQuery>;
+#include <QSqlDatabase>
+#include <QString>
+#include <QSqlQuery>
+#include <QVariant>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ TaskDAO::TaskDAO(QSqlDatabase &database):
 
 void TaskDAO::Init() const
 {
-    if(!mDatabase.tables().contains("tasks"))
+    if(!mDataBase.tables().contains("tasks"))
     {
         QSqlQuery query(mDataBase);
         query.exec(QString("CREATE TABLE tasks")
@@ -39,6 +40,7 @@ void TaskDAO::AddTask(int projectId,Task& task) const
     query.bindValue(":description",task.getDescription());
     query.bindValue(":planned_time",task.getPlanedTime());
     query.bindValue(":planned_time",task.getPlanedTime());
+    query.exec();
     DataBaseConnector::CheckQueryResult(query);
     task.setId(query.lastInsertId().toInt());
     task.setProjectId(projectId);
@@ -56,7 +58,22 @@ void TaskDAO::RemoveTask(int id) const
 
 void TaskDAO::UpdateTask(const Task &task) const
 {
-
+    QSqlQuery query(mDataBase);
+    query.prepare(QString("UPDATE tasks ")
+                  +"SET "
+                  +"name=(:name)" 
+                  +"project_id=(:project_id) "
+                  +"tomato_cnt=(:tomato_cnt)"
+                  +"description=(:description)"
+                  +"planned_time=(:planned_time)"+
+                  "WHERE id=(:id)");
+    query.bindValue(":name",task.getName());
+    query.bindValue(":project_id",task.getProjectId());
+    query.bindValue(":tomato_cnt",task.getTomatoCounter());
+    query.bindValue(":description",task.getDescription());
+    query.bindValue(":planned_time",task.getPlanedTime());
+    query.exec();
+    DataBaseConnector::CheckQueryResult(query);
 }
 
 std::unique_ptr<std::vector<std::unique_ptr<Task> > > TaskDAO::GetTasksForProject(int projectId) const
@@ -73,7 +90,7 @@ std::unique_ptr<std::vector<std::unique_ptr<Task> > > TaskDAO::GetTasksForProjec
         task->setId(query.value("id").toInt());
         task->setProjectId(query.value("project_id").toInt());
         task->setDescription(query.value("description").toString());
-        task->setPlanedTime(query.value("planned_time").toString());
+        task->setPlanedTime(query.value("planned_time").toDate());
         list->push_back(move(task));
     }
     return list;

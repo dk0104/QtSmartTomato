@@ -8,7 +8,7 @@
 
 using namespace std;
 ProjectDAO::ProjectDAO(QSqlDatabase &database):
-    mSqlDataBase(database)
+    mSqlDatabase(database)
 {
 }
 
@@ -32,7 +32,7 @@ void ProjectDAO::AddProject(Project &project)
 
 void ProjectDAO::UpdateProject(const Project &project) const
 {
-    QSqlQuery query(mDatabase);
+    QSqlQuery query(mSqlDatabase);
     query.prepare("UPDATE projects SET name=(:name) WHERE id = (:id)");
     query.bindValue(":name",project.getName());
     query.bindValue(":id",project.getId());
@@ -40,7 +40,7 @@ void ProjectDAO::UpdateProject(const Project &project) const
 
 void ProjectDAO::RemoveProject(int id)
 {
-    QSqlQuery query(mDatabase);
+    QSqlQuery query(mSqlDatabase);
     query.prepare("DELETE FROM albums WHERE id = (:id)");
     query.bindValue(":id",id);
     query.exec();
