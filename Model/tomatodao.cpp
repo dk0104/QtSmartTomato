@@ -27,6 +27,17 @@ void TomatoDAO::Init() const
 
 void TomatoDAO::AddTomato(int taskId, Tomato &tomato)
 {
+    QSqlQuery query(mDataBase);
+    query.prepare(QSting("INSERT INTO tomatos")
+                  +"(task_id,state,started_time,completed_time)"
+                  +"VALUES(:task_id,:state,:started_time,:completed_time)");
+    query.bindValue(":task_id",tomato.taskId);
+    query.bindValue(":state",tomato.processState);
+    query.bindValue(":started_time",tomato.startTime);
+    query.bindValue(":completed_time",tomato.completedTime);
+    query.exec();
+    DataBaseConnector::CheckQuerryResult(query);
+
 
 }
 
