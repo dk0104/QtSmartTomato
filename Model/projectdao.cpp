@@ -41,7 +41,7 @@ void ProjectDAO::UpdateProject(const Project &project) const
 void ProjectDAO::RemoveProject(int id)
 {
     QSqlQuery query(mSqlDatabase);
-    query.prepare("DELETE FROM albums WHERE id = (:id)");
+    query.prepare("DELETE FROM projects WHERE id = (:id)");
     query.bindValue(":id",id);
     query.exec();
     DataBaseConnector::CheckQueryResult(query);
@@ -59,4 +59,5 @@ unique_ptr<vector<unique_ptr<Project> > > ProjectDAO::GetProjects() const
         project->setName(query.value("name").toString());
         list->push_back(move(project));
     }
+    return list;
 }

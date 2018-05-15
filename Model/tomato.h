@@ -7,10 +7,10 @@
 class MODELSHARED_EXPORT Tomato{
 public:
     explicit Tomato();
-    int iD() const;
-    void setID(int iD);
+    int Id() const;
+    void setID(int Id);
 
-    int taskId() const;
+    int getTaskId() const;
     void setTaskId(int taskId);
 
     ProcessStates processState() const;

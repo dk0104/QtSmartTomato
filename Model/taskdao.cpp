@@ -36,7 +36,7 @@ void TaskDAO::AddTask(int projectId,Task& task) const
     query.prepare(QString("INSERT INTO tasks")
             +"(project_id,description,planed_time,tomato_cnt)"
             +"VALUES(:project_id,:description,:planned_time,:tomato_cnt)");
-    query.bindValue(":project_id",projectId);
+    query.bindValue(":project_id",task.getProjectId());
     query.bindValue(":description",task.getDescription());
     query.bindValue(":planned_time",task.getPlanedTime());
     query.bindValue(":planned_time",task.getPlanedTime());
@@ -94,5 +94,4 @@ std::unique_ptr<std::vector<std::unique_ptr<Task> > > TaskDAO::GetTasksForProjec
         list->push_back(move(task));
     }
     return list;
-
 }

@@ -1,7 +1,7 @@
 #include "tomato.h"
 
 
-int Tomato::iD() const
+int Tomato::Id() const
 {
     return mID;
 }
@@ -11,7 +11,7 @@ void Tomato::setID(int iD)
     mID = iD;
 }
 
-int Tomato::taskId() const
+int Tomato::getTaskId() const
 {
     return mTaskId;
 }
