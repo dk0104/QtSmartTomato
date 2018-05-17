@@ -8,6 +8,8 @@
 #include <QSqlQuery>
 #include <QVariant>
 
+using namespace std;
+
 TomatoDAO::TomatoDAO(QSqlDatabase &database):
     mDataBase(database)
 {
@@ -30,7 +32,7 @@ void TomatoDAO::Init() const
 void TomatoDAO::AddTomato(Tomato &tomato)
 {
     QSqlQuery query(mDataBase);
-    query.prepare(QSting("INSERT INTO tomatos")
+    query.prepare(QString("INSERT INTO tomatos")
                   +"(task_id,state,started_time,completed_time)"
                   +"VALUES(:task_id,:state,:started_time,:completed_time)");
     query.bindValue(":task_id",tomato.getTaskId());
@@ -38,14 +40,14 @@ void TomatoDAO::AddTomato(Tomato &tomato)
     query.bindValue(":started_time",tomato.startTime());
     query.bindValue(":completed_time",tomato.completedTime());
     query.exec();
-    DataBaseConnector::CheckQuerryResult(query);
+    DataBaseConnector::CheckQueryResult(query);
 }
 
 void TomatoDAO::RemoveTomato(int id) const
 {
     QSqlQuery query(mDataBase);
     query.prepare("DELETE FROM tomatos WHERE id = (:id)");
-    query.bildValue(":id",id);
+    query.bindValue(":id",id);
     query.exec();
     DataBaseConnector::CheckQueryResult(query);
 }
@@ -68,20 +70,18 @@ void TomatoDAO::UpdateTomato(const Tomato& tomato) const
     DataBaseConnector::CheckQueryResult(query);
 }
 
-std::unique_ptr<std::vector<std::unique_ptr<Tomato> > > TomatoDAO::GetTomatoForTask(int taskId) const
+unique_ptr<vector<unique_ptr<Tomato> > > TomatoDAO::GetTomatoForTask(int taskId) const
 {
     QSqlQuery query(mDataBase);
     query.prepare("SELECT * FROM tomatos WHERE task_id = (:task_id)");
-    query.bindValue("task_id".task_id);
+    query.bindValue(":task_id",taskId);
     query.exec();
     DataBaseConnector::CheckQueryResult(query);
     unique_ptr<vector<unique_ptr<Tomato>>> list(new vector<unique_ptr<Tomato>>());
     while(query.next()) {
         unique_ptr<Tomato> tomato(new Tomato());
-        tomato->setId(query.value("id").toInt());
-
+        tomato->setID(query.value("id").toInt());
         list->push_back(move(tomato));
     }
     return list;
-
 }
