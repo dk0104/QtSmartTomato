@@ -1,21 +1,19 @@
 #include "epicdao.h"
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QStringList>
 #include "databaseconnector.h"
 
-EpicDAO::EpicDAO(QSqlDatabase &database):
-    mDatabase(database)
-{
+#include <QSqlDatabase>
 
+
+EpicDAO::EpicDAO(QSqlDatabase& db):
+    m_DataBase(db)
+{
 }
 
-void EpicDAO::init() const
+void EpicDAO::Init() const
 {
-    if(!mDatabase.tables().contains("epic")){
-        QSqlQuery query(mDatabase);
+    if(!m_DataBase.tables().contains("epic")){
+        QSqlQuery query(m_DataBase);
         query.exec("CREATE TABLE epic (id INTEGER KEY AUTOINKREMENT, name TEXT)");
         DataBaseConnector::CheckQueryResult(query);
     }
-
 }

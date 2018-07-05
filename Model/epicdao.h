@@ -1,16 +1,15 @@
 #ifndef EPICDAO_H
 #define EPICDAO_H
 
-class QSqlDatabase;
-class Project;
+#include "daobase.h"
 
-class EpicDAO
+class EpicDAO : public DaoBase
 {
 public:
-    EpicDAO(QSqlDatabase& database);
-    void init() const;
+    EpicDAO(QSqlDatabase& db);
+    void Init() const override;
 private:
-    QSqlDatabase& mDatabase;
+    QSqlDatabase& m_DataBase;
 };
 
 #endif // EPICDAO_H

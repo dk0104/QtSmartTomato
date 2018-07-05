@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 
+QT 	 += core
 QT       += sql
 
 QT       -= gui
@@ -47,7 +48,8 @@ HEADERS += \
     epicdao.h \
     projectdao.h \
     taskdao.h \
-    tomatodao.h
+    tomatodao.h \
+    daobase.h
 
 unix {
     target.path = /usr/lib

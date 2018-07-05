@@ -1,25 +1,24 @@
 #ifndef TASKDAO_H
 #define TASKDAO_H
-
+#include "daobase.h"
 #include <memory>
 #include <vector>
 
-class QSqlDatabase;
 class QString;
 class Project;
 class Task;
 
-class TaskDAO
+class TaskDAO : public DaoBase
 {
 public:
     TaskDAO(QSqlDatabase& database);
-    void Init() const;
+    void Init() const override;
     void AddTask(int projectId,Task& task) const;
     void RemoveTask(int id)  const;
     void UpdateTask(const Task& task) const;
     std::unique_ptr<std::vector<std::unique_ptr<Task>>> GetTasksForProject(int projectId) const;
 private:
-    QSqlDatabase& mDataBase;
+    QSqlDatabase& m_SataBase;
 };
 
 #endif // TASKDAO_H

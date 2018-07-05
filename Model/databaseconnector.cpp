@@ -3,15 +3,22 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+#include "daobase.h"
+#include "epicdao.h"
+#include "projectdao.h"
+#include "taskdao.h"
+#include "tomatodao.h"
 
 DataBaseConnector::DataBaseConnector(const QString& path):
-    mDataBase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))),
-    mEpicDao(*mDataBase)
+    mDataBase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE")))
 {
+    InitDaoList();
     mDataBase->setDatabaseName(path);
     auto openResult = mDataBase->open();
     qDebug() << "Database connection: " << (openResult?"OK":"KO")<<endl;
-    mEpicDao.init();
+    for(auto& key : mDaoBaseList->keys()){
+        (*mDaoBaseList)[key]->Init();
+    }
 }
 
 DataBaseConnector &DataBaseConnector::GetInstance()
@@ -28,4 +35,12 @@ void DataBaseConnector::CheckQueryResult(const QSqlQuery &query)
         qWarning() << "Query KO:" << query.lastError().text();
         qWarning() << "Query text:" << query.lastQuery();
     }
+}
+
+void DataBaseConnector::InitDaoList(){
+    mDaoBaseList=std::make_unique<QHash<QString,const DaoBase*>>();
+    (*mDaoBaseList)["Epic"] = new EpicDAO(*mDataBase);
+    (*mDaoBaseList)["Project"] = new ProjectDAO(*mDataBase);
+    (*mDaoBaseList)["Task"] = new TaskDAO(*mDataBase);
+    (*mDaoBaseList)["Tomato"] = new TomatoDAO(*mDataBase);
 }

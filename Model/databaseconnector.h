@@ -2,11 +2,13 @@
 #define DATABASECONNECTOR_H
 
 #include <QString>
+#include <QHash>
 #include <memory>
-#include "epicdao.h"
+#include <vector>
 
 class QSqlQuery;
 class QSqlDatabase;
+class DaoBase;
 
 const QString DB_FILENAME = "tomato.db";
 
@@ -24,10 +26,10 @@ public:
 protected:
     DataBaseConnector(const QString& path = DB_FILENAME);
 public:
-    const EpicDAO mEpicDao;
+     std::unique_ptr<QHash<QString,const DaoBase*>> mDaoBaseList;
 private:
+    void InitDaoList();
     std::unique_ptr<QSqlDatabase> mDataBase;
-
 };
 
 #endif // DATABASECONNECTOR_H

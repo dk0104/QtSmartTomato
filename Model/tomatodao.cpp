@@ -11,14 +11,14 @@
 using namespace std;
 
 TomatoDAO::TomatoDAO(QSqlDatabase &database):
-    mDataBase(database)
+    dataBase(database)
 {
 }
 
 void TomatoDAO::Init() const
 {
-    if(!mDataBase.tables().contains("tomatos")){
-        QSqlQuery query(mDataBase);
+    if(!dataBase.tables().contains("tomatos")){
+        QSqlQuery query(dataBase);
         query.exec(QString("CREATE TABLE tomatos")
                    +"(id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    +"task_id INTEGER"
@@ -31,7 +31,7 @@ void TomatoDAO::Init() const
 
 void TomatoDAO::AddTomato(Tomato &tomato)
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(dataBase);
     query.prepare(QString("INSERT INTO tomatos")
                   +"(task_id,state,started_time,completed_time)"
                   +"VALUES(:task_id,:state,:started_time,:completed_time)");
@@ -45,7 +45,7 @@ void TomatoDAO::AddTomato(Tomato &tomato)
 
 void TomatoDAO::RemoveTomato(int id) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(dataBase);
     query.prepare("DELETE FROM tomatos WHERE id = (:id)");
     query.bindValue(":id",id);
     query.exec();
@@ -54,7 +54,7 @@ void TomatoDAO::RemoveTomato(int id) const
 
 void TomatoDAO::UpdateTomato(const Tomato& tomato) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(dataBase);
     query.prepare(QString("UPDATE tomatos SET")
             +"processState =(:processState)"
             +"taskId=(:taskId)"
@@ -72,7 +72,7 @@ void TomatoDAO::UpdateTomato(const Tomato& tomato) const
 
 unique_ptr<vector<unique_ptr<Tomato> > > TomatoDAO::GetTomatoForTask(int taskId) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(dataBase);
     query.prepare("SELECT * FROM tomatos WHERE task_id = (:task_id)");
     query.bindValue(":task_id",taskId);
     query.exec();

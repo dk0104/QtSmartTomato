@@ -11,16 +11,16 @@
 using namespace std;
 
 TaskDAO::TaskDAO(QSqlDatabase &database):
-    mDataBase(database)
+    m_SataBase(database)
 {
 
 }
 
 void TaskDAO::Init() const
 {
-    if(!mDataBase.tables().contains("tasks"))
+    if(!m_SataBase.tables().contains("tasks"))
     {
-        QSqlQuery query(mDataBase);
+        QSqlQuery query(m_SataBase);
         query.exec(QString("CREATE TABLE tasks")
                    +"(id INTEGER PRIMARY KEY AUTOINCREMENT,"
                    +"project_id INTEGER"
@@ -32,7 +32,7 @@ void TaskDAO::Init() const
 
 void TaskDAO::AddTask(int projectId,Task& task) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(m_SataBase);
     query.prepare(QString("INSERT INTO tasks")
             +"(project_id,description,planed_time,tomato_cnt)"
             +"VALUES(:project_id,:description,:planned_time,:tomato_cnt)");
@@ -48,7 +48,7 @@ void TaskDAO::AddTask(int projectId,Task& task) const
 
 void TaskDAO::RemoveTask(int id) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(m_SataBase);
     query.prepare("DELETE FROM tasks WHERE id = (:id)");
     query.bindValue(":id",id);
     query.exec();
@@ -58,7 +58,7 @@ void TaskDAO::RemoveTask(int id) const
 
 void TaskDAO::UpdateTask(const Task &task) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(m_SataBase);
     query.prepare(QString("UPDATE tasks ")
                   +"SET "
                   +"name=(:name)" 
@@ -78,7 +78,7 @@ void TaskDAO::UpdateTask(const Task &task) const
 
 std::unique_ptr<std::vector<std::unique_ptr<Task> > > TaskDAO::GetTasksForProject(int projectId) const
 {
-    QSqlQuery query(mDataBase);
+    QSqlQuery query(m_SataBase);
 
     query.prepare("SELECT * FROM tasks WHERE projet_id = (:project_id)");
     query.bindValue(":project_id", projectId);

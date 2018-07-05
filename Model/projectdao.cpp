@@ -8,14 +8,14 @@
 
 using namespace std;
 ProjectDAO::ProjectDAO(QSqlDatabase &database):
-    mSqlDatabase(database)
+    m_DataBase(database)
 {
 }
 
 void ProjectDAO::Init() const
 {
-    if (!mSqlDatabase.tables().contains("projects")) {
-        QSqlQuery query(mSqlDatabase);
+    if (!m_DataBase.tables().contains("projects")) {
+        QSqlQuery query(m_DataBase);
         query.exec("CREATE TABLE projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
         DataBaseConnector::CheckQueryResult(query);
     }
@@ -23,7 +23,7 @@ void ProjectDAO::Init() const
 
 void ProjectDAO::AddProject(Project &project)
 {
-    QSqlQuery query(mSqlDatabase);
+    QSqlQuery query(m_DataBase);
     query.prepare("INSERT INTO projekts (name) VALUES (:name),");
     query.bindValue(":name",project.getName());
     query.exec();
@@ -32,7 +32,7 @@ void ProjectDAO::AddProject(Project &project)
 
 void ProjectDAO::UpdateProject(const Project &project) const
 {
-    QSqlQuery query(mSqlDatabase);
+    QSqlQuery query(m_DataBase);
     query.prepare("UPDATE projects SET name=(:name) WHERE id = (:id)");
     query.bindValue(":name",project.getName());
     query.bindValue(":id",project.getId());
@@ -40,7 +40,7 @@ void ProjectDAO::UpdateProject(const Project &project) const
 
 void ProjectDAO::RemoveProject(int id)
 {
-    QSqlQuery query(mSqlDatabase);
+    QSqlQuery query(m_DataBase);
     query.prepare("DELETE FROM projects WHERE id = (:id)");
     query.bindValue(":id",id);
     query.exec();
@@ -49,7 +49,7 @@ void ProjectDAO::RemoveProject(int id)
 
 unique_ptr<vector<unique_ptr<Project> > > ProjectDAO::GetProjects() const
 {
-    QSqlQuery query("SELECT * FROM projects",mSqlDatabase);
+    QSqlQuery query("SELECT * FROM projects",m_DataBase);
     query.exec();
     DataBaseConnector::CheckQueryResult(query);
     unique_ptr<vector<unique_ptr<Project>>> list(new vector<unique_ptr<Project>>());

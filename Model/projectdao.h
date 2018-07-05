@@ -1,26 +1,26 @@
 #ifndef PROJECTDAO_H
 #define PROJECTDAO_H
 
+#include "daobase.h"
 #include <memory>
 #include <vector>
 
 // Forward decl
-class QSqlDatabase;
 class QString;
 class Project;
 
 
-class ProjectDAO
+class ProjectDAO : public DaoBase
 {
 public:
     ProjectDAO(QSqlDatabase& database);
-    void Init() const;
+    void Init() const override;
     void AddProject(Project& project);
     void UpdateProject(const Project& project) const;
     void RemoveProject(int id);
     std::unique_ptr<std::vector<std::unique_ptr<Project>>> GetProjects() const;
 private:
-    QSqlDatabase& mSqlDatabase;
+    QSqlDatabase& m_DataBase;
 };
 
 #endif // PROJECTDAO_H
