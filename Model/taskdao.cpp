@@ -11,6 +11,7 @@
 using namespace std;
 
 TaskDAO::TaskDAO(QSqlDatabase &database):
+    DaoBase(database),
     m_SataBase(database)
 {
 

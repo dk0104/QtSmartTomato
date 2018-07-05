@@ -11,6 +11,7 @@
 using namespace std;
 
 TomatoDAO::TomatoDAO(QSqlDatabase &database):
+    DaoBase(database),
     dataBase(database)
 {
 }

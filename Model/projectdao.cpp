@@ -8,6 +8,7 @@
 
 using namespace std;
 ProjectDAO::ProjectDAO(QSqlDatabase &database):
+    DaoBase(database),
     m_DataBase(database)
 {
 }

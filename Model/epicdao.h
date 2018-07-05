@@ -9,7 +9,7 @@ public:
     EpicDAO(QSqlDatabase& db);
     void Init() const override;
 private:
-    QSqlDatabase& m_DataBase;
+    QSqlDatabase& m_Database;
 };
 
 #endif // EPICDAO_H

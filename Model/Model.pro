@@ -32,10 +32,10 @@ SOURCES += \
     project.cpp \
     task.cpp \
     databaseconnector.cpp \
-    epicdao.cpp \
     projectdao.cpp \
     taskdao.cpp \
-    tomatodao.cpp
+    tomatodao.cpp \
+    epicdao.cpp
 
 HEADERS += \
         model_global.h \ 
@@ -45,11 +45,11 @@ HEADERS += \
     task.h \
     states.h \
     databaseconnector.h \
-    epicdao.h \
     projectdao.h \
     taskdao.h \
     tomatodao.h \
-    daobase.h
+    daobase.h \
+    epicdao.h
 
 unix {
     target.path = /usr/lib
