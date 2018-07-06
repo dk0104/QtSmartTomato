@@ -19,8 +19,6 @@ public:
     void UpdateProject(const Project& project) const;
     void RemoveProject(int id);
     std::unique_ptr<std::vector<std::unique_ptr<Project>>> GetProjects() const;
-private:
-    QSqlDatabase& m_DataBase;
 };
 
 #endif // PROJECTDAO_H

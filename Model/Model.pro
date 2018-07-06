@@ -35,7 +35,8 @@ SOURCES += \
     projectdao.cpp \
     taskdao.cpp \
     tomatodao.cpp \
-    epicdao.cpp
+    epicdao.cpp \
+    daobase.cpp
 
 HEADERS += \
         model_global.h \ 

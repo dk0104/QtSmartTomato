@@ -17,8 +17,6 @@ public:
     void RemoveTomato(int id) const;
     void UpdateTomato(const Tomato& tomato) const;
     std::unique_ptr<std::vector<std::unique_ptr<Tomato>>> GetTomatoForTask(int taskId) const;
-private:
-    QSqlDatabase& dataBase;
 };
 
 #endif // TOMATODAO_H

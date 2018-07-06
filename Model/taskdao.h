@@ -17,8 +17,6 @@ public:
     void RemoveTask(int id)  const;
     void UpdateTask(const Task& task) const;
     std::unique_ptr<std::vector<std::unique_ptr<Task>>> GetTasksForProject(int projectId) const;
-private:
-    QSqlDatabase& m_SataBase;
 };
 
 #endif // TASKDAO_H

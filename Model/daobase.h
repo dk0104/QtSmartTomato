@@ -7,6 +7,8 @@ class DaoBase
 public:
     explicit DaoBase(QSqlDatabase& database);
     virtual void Init() const = 0;
+protected:
+    QSqlDatabase& mDataBaseRef;
 };
 
 
