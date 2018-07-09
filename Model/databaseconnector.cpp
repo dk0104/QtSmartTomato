@@ -16,9 +16,7 @@ DataBaseConnector::DataBaseConnector(const QString& path):
     mDataBase->setDatabaseName(path);
     auto openResult = mDataBase->open();
     qDebug() << "Database connection: " << (openResult?"OK":"KO")<<endl;
-    for(auto& key : mDaoBaseList->keys()){
-        (*mDaoBaseList)[key]->Init();
-    }
+    UpdateDAO();
 }
 
 DataBaseConnector &DataBaseConnector::GetInstance()
@@ -44,8 +42,15 @@ DataBaseConnector::~DataBaseConnector()
 
 void DataBaseConnector::InitDaoList(){
     mDaoBaseList=std::make_unique<QHash<QString,const DaoBase*>>();
-    (*mDaoBaseList)["Epic"] = new EpicDAO(*mDataBase);
-    (*mDaoBaseList)["Project"] = new ProjectDAO(*mDataBase);
-    (*mDaoBaseList)["Task"] = new TaskDAO(*mDataBase);
-    (*mDaoBaseList)["Tomato"] = new TomatoDAO(*mDataBase);
+    (*mDaoBaseList)[EPIC] = new EpicDAO(*mDataBase);
+    (*mDaoBaseList)[PROJECT] = new ProjectDAO(*mDataBase);
+    (*mDaoBaseList)[TASK] = new TaskDAO(*mDataBase);
+    (*mDaoBaseList)[TOMATO] = new TomatoDAO(*mDataBase);
+}
+
+void DataBaseConnector::UpdateDAO()
+{
+    for(auto& key : mDaoBaseList->keys()){
+        (*mDaoBaseList)[key]->Init();
+    }
 }

@@ -36,7 +36,9 @@ SOURCES += \
     taskdao.cpp \
     tomatodao.cpp \
     epicdao.cpp \
-    daobase.cpp
+    daobase.cpp \
+    epicmodel.cpp \
+    projectmodel.cpp
 
 HEADERS += \
         model_global.h \ 
@@ -50,7 +52,9 @@ HEADERS += \
     taskdao.h \
     tomatodao.h \
     daobase.h \
-    epicdao.h
+    epicdao.h \
+    epicmodel.h \
+    projectmodel.h
 
 unix {
     target.path = /usr/lib

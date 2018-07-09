@@ -11,6 +11,10 @@ class QSqlDatabase;
 class DaoBase;
 
 const QString DB_FILENAME = "tomato.db";
+const QString PROJECT="project";
+const QString EPIC="epic";
+const QString TASK="task";
+const QString TOMATO="tomato";
 
 class DataBaseConnector
 {
