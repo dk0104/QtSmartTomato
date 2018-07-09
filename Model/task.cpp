@@ -1,6 +1,11 @@
 #include "task.h"
 
 
+Task::Task()
+{
+
+}
+
 QString Task::getName() const
 {
     return mName;

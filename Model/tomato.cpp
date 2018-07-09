@@ -1,6 +1,11 @@
 #include "tomato.h"
 
 
+Tomato::Tomato()
+{
+
+}
+
 int Tomato::Id() const
 {
     return mID;

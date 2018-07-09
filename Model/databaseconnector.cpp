@@ -37,6 +37,11 @@ void DataBaseConnector::CheckQueryResult(const QSqlQuery &query)
     }
 }
 
+DataBaseConnector::~DataBaseConnector()
+{
+
+}
+
 void DataBaseConnector::InitDaoList(){
     mDaoBaseList=std::make_unique<QHash<QString,const DaoBase*>>();
     (*mDaoBaseList)["Epic"] = new EpicDAO(*mDataBase);
