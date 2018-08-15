@@ -22,6 +22,7 @@ class DataBaseConnector
 public:
     static DataBaseConnector& GetInstance();
     static void CheckQueryResult(const QSqlQuery& guery);
+    QHash<QString, DaoBase *> &GetDaoBaseList();
     DataBaseConnector(const DataBaseConnector& ref)=delete;
     DataBaseConnector& operator =(const DataBaseConnector& ref)=delete;
     ~ DataBaseConnector();
@@ -29,10 +30,10 @@ public:
 
 protected:
     DataBaseConnector(const QString& path = DB_FILENAME);
-public:
-     std::unique_ptr<QHash<QString,const DaoBase*>> mDaoBaseList;
 private:
+    QHash<QString,DaoBase*> mDaoBaseList;
     void InitDaoList();
+    void UpdateDAO();
     std::unique_ptr<QSqlDatabase> mDataBase;
 };
 

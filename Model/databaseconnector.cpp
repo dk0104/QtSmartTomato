@@ -35,22 +35,27 @@ void DataBaseConnector::CheckQueryResult(const QSqlQuery &query)
     }
 }
 
+QHash<QString,DaoBase*> &DataBaseConnector::GetDaoBaseList()
+{
+   return mDaoBaseList;
+}
+
+
 DataBaseConnector::~DataBaseConnector()
 {
 
 }
 
 void DataBaseConnector::InitDaoList(){
-    mDaoBaseList=std::make_unique<QHash<QString,const DaoBase*>>();
-    (*mDaoBaseList)[EPIC] = new EpicDAO(*mDataBase);
-    (*mDaoBaseList)[PROJECT] = new ProjectDAO(*mDataBase);
-    (*mDaoBaseList)[TASK] = new TaskDAO(*mDataBase);
-    (*mDaoBaseList)[TOMATO] = new TomatoDAO(*mDataBase);
+    mDaoBaseList[EPIC] = new EpicDAO(*mDataBase);
+    mDaoBaseList[PROJECT] = new ProjectDAO(*mDataBase);
+    mDaoBaseList[TASK] = new TaskDAO(*mDataBase);
+    mDaoBaseList[TOMATO] = new TomatoDAO(*mDataBase);
 }
 
 void DataBaseConnector::UpdateDAO()
 {
-    for(auto& key : mDaoBaseList->keys()){
-        (*mDaoBaseList)[key]->Init();
+    for(auto& key : mDaoBaseList.keys()){
+        mDaoBaseList[key]->Init();
     }
 }

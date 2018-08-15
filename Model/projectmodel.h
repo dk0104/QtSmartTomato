@@ -16,9 +16,9 @@ public:
     enum Roles{
         IdRole = Qt::UserRole+1,
         NameRole
-    }
+    };
 
-    ProjectModel(QPbject* parent = 0);
+    ProjectModel(QObject* parent = 0);
     QModelIndex addProject(const Project& project);
 
     // QAbstractItemModel interface
