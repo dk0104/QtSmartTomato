@@ -12,6 +12,11 @@ ProjectDAO::ProjectDAO(QSqlDatabase &database):
 {
 }
 
+ProjectDAO::~ProjectDAO()
+{
+
+}
+
 void ProjectDAO::Init() const
 {
     if (!mDataBaseRef.tables().contains("projects")) {

@@ -1,6 +1,6 @@
 #include "projectmodel.h"
 #include "projectdao.h"
-
+using namespace std;
 
 ProjectModel::ProjectModel(QObject *parent):
     QAbstractListModel(parent),
@@ -11,6 +11,18 @@ ProjectModel::ProjectModel(QObject *parent):
     mProjects = pp->GetProjects();
 }
 
+QModelIndex ProjectModel::addProject(const Project &project)
+{
+    auto rowIndex = rowCount();
+    beginInsertRows(QModelIndex(),rowIndex,rowIndex);
+    unique_ptr<Project> newProject(new Project(project));
+    auto tmpProjectDao = dynamic_cast<ProjectDAO*>(mDataBaseConnector.GetDaoBaseList()[PROJECT]);
+    tmpProjectDao->AddProject(*newProject);
+    mProjects->push_back(move(newProject));
+    endInsertRows();
+    return index(rowIndex,0);
+}
+
 int ProjectModel::rowCount(const QModelIndex &parent) const
 {
     return mProjects->size();
@@ -19,20 +31,33 @@ int ProjectModel::rowCount(const QModelIndex &parent) const
 QVariant ProjectModel::data(const QModelIndex &index, int role) const
 {
     if(!isIndexValid(index)){
-        return QVariant;
+        return QVariant();
     }
-    const Project& project = mProjects->at(index.row);
+    auto project = *mProjects->at(index.row());
     switch (role) {
     case Roles::IdRole:
         return project.getId();
     case Roles::NameRole:
     case Qt::DisplayRole:
         return project.getName();
-
     default:
-        return QVariant;
+        return QVariant();
+    }
+}
+
+bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!isIndexValid(index) || role != Roles::NameRole)
+    {
+        return false;
     }
 
+    Project& project = *mProjects->at(index.row());
+    project.setName(value.toString());
+    auto tmpProjectDao = dynamic_cast<ProjectDAO*>(mDataBaseConnector.GetDaoBaseList()[PROJECT]);
+    tmpProjectDao->UpdateProject(project);
+    emit dataChanged(index,index);
+    return true;
 }
 
 bool ProjectModel::removeRows(int row, int count, const QModelIndex &parent)
@@ -42,7 +67,10 @@ bool ProjectModel::removeRows(int row, int count, const QModelIndex &parent)
 
 QHash<int, QByteArray> ProjectModel::roleNames() const
 {
-
+    QHash<int,QByteArray> roles;
+    roles[Roles::IdRole] = "id";
+    roles[Roles::NameRole] = "name";
+    return roles;
 }
 
 bool ProjectModel::isIndexValid(const QModelIndex &index) const

@@ -14,6 +14,7 @@ class ProjectDAO : public DaoBase
 {
 public:
     ProjectDAO(QSqlDatabase& database);
+    virtual ~ProjectDAO();
     void Init() const override;
     void AddProject(Project& project);
     void UpdateProject(const Project& project) const;
