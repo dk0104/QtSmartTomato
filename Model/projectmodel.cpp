@@ -62,7 +62,22 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 bool ProjectModel::removeRows(int row, int count, const QModelIndex &parent)
 {
-
+    if(row < 0
+            || row >= rowCount()
+            || count < 0
+            || (row+count) > rowCount()){
+        return false;
+    }
+    beginRemoveRows(parent,row,row+count-1);
+    int countLeft = count;
+    while(countLeft--){
+        const Project& project = *mProjects->at(row+countLeft);
+        auto tmpProjectDao = dynamic_cast<ProjectDAO*>(mDataBaseConnector.GetDaoBaseList()[PROJECT]);
+        tmpProjectDao->RemoveProject(project.getId());
+    }
+    mProjects->erase(mProjects->begin() + row, mProjects->begin() + row + count);
+    endRemoveRows();
+    return true;
 }
 
 QHash<int, QByteArray> ProjectModel::roleNames() const
