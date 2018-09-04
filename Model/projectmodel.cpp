@@ -90,5 +90,10 @@ QHash<int, QByteArray> ProjectModel::roleNames() const
 
 bool ProjectModel::isIndexValid(const QModelIndex &index) const
 {
-
+    if(index.row() < 0
+            || index.row() >= rowCount()
+            || !index.isValid()){
+        return false;
+    }
+    return true;
 }
