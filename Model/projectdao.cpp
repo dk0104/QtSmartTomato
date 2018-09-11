@@ -32,6 +32,7 @@ void ProjectDAO::AddProject(Project &project)
     query.prepare("INSERT INTO projekts (name) VALUES (:name),");
     query.bindValue(":name",project.getName());
     query.exec();
+    DataBaseConnector::CheckQueryResult(query);
     project.setId(query.lastInsertId().toInt());
 }
 
@@ -41,6 +42,8 @@ void ProjectDAO::UpdateProject(const Project &project) const
     query.prepare("UPDATE projects SET name=(:name) WHERE id = (:id)");
     query.bindValue(":name",project.getName());
     query.bindValue(":id",project.getId());
+    query.exec();
+    DataBaseConnector::CheckQueryResult(query);
 }
 
 void ProjectDAO::RemoveProject(int id)

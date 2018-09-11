@@ -7,6 +7,7 @@
 #include <QObject>
 
 class ProjectModel;
+class TaskDAO;
 
 class MODELSHARED_EXPORT TaskModel: public QAbstractListModel
 {
@@ -14,20 +15,21 @@ class MODELSHARED_EXPORT TaskModel: public QAbstractListModel
 public:
 
     enum Roles{
-        UrlRole=Qt::UserRole + 1,
-        FilePathRole
+        IdRole = Qt::UserRole+1,
+        DisplayRole,
+        NameRole
     };
 
     TaskModel(const ProjectModel& projectModel, QObject* parent = nullptr);
 
     // QAbstractItemModel interface
 public:
-    int rowCount(const QModelIndex &parent) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool removeRows(int row, int count, const QModelIndex &parent);
     QHash<int, QByteArray> roleNames() const;
 
-    void setTaskId(int taskId);
+    void setProjectId(int projectId);
     void clearTask();
 
 public slots:
@@ -36,10 +38,11 @@ public slots:
 private:
     void loadTask(int taskID);
     bool isIndexValid(const QModelIndex& index) const;
+    TaskDAO *GetTaskDao();
 
-    int mTaskId;
+    int mProjectId;
     DataBaseConnector& mDataBaseConnector;
-    std::unique_ptr<std::vector<std::unique_ptr<Task>>> mTask;
+    std::unique_ptr<std::vector<std::unique_ptr<Task>>> mTasks;
 };
 
 #endif // TASKMODEL_H

@@ -7,7 +7,7 @@
 class MODELSHARED_EXPORT Epic
 {
 public:
-    explicit Epic(const QString& name = "");
+    explicit Epic(const QString& name = "Default");
 
     QString name() const;
     void setName(const QString &name);
@@ -15,7 +15,7 @@ public:
     int id() const;
     void setId(int id);
 
-public:
+private:
     QString mName;
     int mId;
 };
