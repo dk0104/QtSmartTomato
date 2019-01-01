@@ -1,6 +1,8 @@
 #ifndef EPICDAO_H
 #define EPICDAO_H
 
+#include <QAbstractListModel>
+#include <memory>
 #include "daobase.h"
 #include "epic.h"
 
@@ -10,7 +12,7 @@ public:
     EpicDAO(QSqlDatabase& db);
     virtual ~EpicDAO();
     void Init() const override;
-    unique_ptr<Epic> GetEpic(int id = 1);
+    std::unique_ptr<Epic> GetEpic(int id = 1);
 };
 
 #endif // EPICDAO_H

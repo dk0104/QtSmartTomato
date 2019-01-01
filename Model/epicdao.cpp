@@ -15,12 +15,12 @@ EpicDAO::EpicDAO(QSqlDatabase &db):
 
 EpicDAO::~EpicDAO()
 {
-
 }
 
 void EpicDAO::Init() const
 {
-    if(!mDataBaseRef.tables().contains("epic")){
+    if(!mDataBaseRef.tables().contains("epic"))
+    {
         QSqlQuery query(mDataBaseRef);
         query.exec("CREATE TABLE epic (id INTEGER KEY AUTOINKREMENT, name TEXT)");
         DataBaseConnector::CheckQueryResult(query);
